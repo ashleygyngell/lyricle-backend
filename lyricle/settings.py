@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'leagues'
+    'rest_framework',
+    'leagues',
+    'dailysongs',
 ]
 
 MIDDLEWARE = [
@@ -76,8 +78,12 @@ WSGI_APPLICATION = 'lyricle.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'USER': '',
+        'PASSWORD': '',
+        'NAME': 'lyricle',
+        'HOST': 'localhost',
+        'PORT': 5432
     }
 }
 
