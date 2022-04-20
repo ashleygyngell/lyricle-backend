@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_extensions',
+    # 'django_extensions',
     'corsheaders',
     'rest_framework',
     'jwt_auth',
@@ -160,7 +160,7 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'jwt_auth.CustomUser'
 
 
-CSRF_TRUSTED_ORIGINS = ['https://project4ag.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['https://eflyricle.herokuapp.com']
 
 
 django_on_heroku.settings(locals())
