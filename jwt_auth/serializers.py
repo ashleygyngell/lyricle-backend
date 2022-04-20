@@ -31,3 +31,4 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'email', 'password', 'password_confirmation',)
 
         # __all__
+        # add in image in fields. 
