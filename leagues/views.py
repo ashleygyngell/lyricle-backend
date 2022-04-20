@@ -7,3 +7,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 class LeagueList(ListCreateAPIView):
     queryset = League.objects.all()
     serializer_class = LeagueSerializer
+
+class LeagueDetail(RetrieveUpdateDestroyAPIView):
+    queryset = League.objects.all()
+    serializer_class = LeagueSerializer

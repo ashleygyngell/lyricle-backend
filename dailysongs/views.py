@@ -7,3 +7,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 class SongList(ListCreateAPIView):
     queryset = Song.objects.all()
     serializer_class = SongSerializer
+
+class SongDetail(RetrieveUpdateDestroyAPIView):
+    queryset = Song.objects.all()
+    serializer_class = SongSerializer
