@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'rest_framework',
+    'jwt_auth',
     'leagues',
     'dailysongs',
 ]
@@ -81,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'USER': '',
         'PASSWORD': '',
-        'NAME': 'lyricle',
+        'NAME': 'lyricledb2',
         'HOST': 'localhost',
         'PORT': 5432
     }
@@ -138,4 +140,6 @@ REST_FRAMEWORK = {
         'jwt_auth.authentication.JWTAuthentication',
     ],
 }
+
+AUTH_USER_MODEL = 'jwt_auth.CustomUser'
 
