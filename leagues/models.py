@@ -1,5 +1,9 @@
+from pickle import TRUE
 from django.db import models
 
+from dailysongs.models import Song
+from jwt_auth.serializers import User
+from jwt_auth.models import CustomUser
 # Create your models here.
 
 #  Defines League Model
@@ -12,9 +16,9 @@ class League(models.Model):
             verbose_name='ID'
             )
     league_name = models.CharField(max_length=50)
+    daily_songs = models.ManyToManyField(Song, related_name="LeaguesDailySong", default=None)
+    league_users = models.ManyToManyField(User, related_name="UserLeagues", default=None )
 
     def __str__(self):
         return self.league_name
-
-  
 

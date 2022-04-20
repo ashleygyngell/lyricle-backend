@@ -10,6 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import os
+from pathlib import Path
+import django_on_heroku
+from dotenv import load_dotenv
+import dj_database_url
+load_dotenv()
+
+ENV = str(os.getenv('ENVIRONMENT', 'DEV'))
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,12 +29,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8zeca4r0gftp@z%r%9ium+wxc@skq71ua1covj4ci+gva(yz5d'
+if ENV == 'DEV':
+  SECRET_KEY = 'django-insecure-8zeca4r0gftp@z%r%9ium+wxc@skq71ua1covj4ci+gva(yz5d'
+else:
+      SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = ENV == 'DEV'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [*]
 
 
 # Application definition
@@ -38,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'corsheaders',
     'rest_framework',
     'jwt_auth',
     'leagues',
@@ -45,6 +58,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,6 +67,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'lyricle.urls'
 
@@ -78,16 +94,16 @@ WSGI_APPLICATION = 'lyricle.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
+DATABASES = {}
+if ENV != 'DEV':
+     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)	
+else:
+     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'USER': '',
-        'PASSWORD': '',
-        'NAME': 'lyricledb2',
+        'NAME': 'lyricledb3',
         'HOST': 'localhost',
         'PORT': 5432
     }
-}
 
 
 # Password validation
@@ -143,3 +159,8 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = 'jwt_auth.CustomUser'
 
+
+CSRF_TRUSTED_ORIGINS = ['https://project4ag.herokuapp.com']
+
+
+django_on_heroku.settings(locals())
