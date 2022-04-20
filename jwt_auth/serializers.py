@@ -28,7 +28,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password', 'password_confirmation',)
+        fields = ('id', 'username', 'email', 'password', 'password_confirmation', 'image')
 
         # __all__
         # add in image in fields. 
