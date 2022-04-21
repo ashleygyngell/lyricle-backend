@@ -1,19 +1,35 @@
 from rest_framework import serializers
+
+from jwt_auth.serializers import UserSerializer
 from ..models import League
 
 # This class controls how a League is serialized to JSON. Is inherited from the default Model Serializer 
-class LeagueSerializer(serializers.ModelSerializer):
+class JoinLeagueSerializer(serializers.ModelSerializer):
 
   class Meta:
  # The class type we want it to serialize
     model = League
+
+    league_users = UserSerializer(many=True) 
     # Which fields to serialize 
-    fields = ('__all__')
+    fields = ('league_users',)
+
+class LeagueSerializer(serializers.ModelSerializer):
+
+   class Meta:
+ # The class type we want it to serialize
+    model = League
+
+    league_users = UserSerializer(many=True) 
+    # Which fields to serialize 
+    fields = ('league_name', 'league_users',)
 
 class UserLeagueSerializer(serializers.ModelSerializer):
 
     class Meta: 
 
-     model = League 
+     model = League
+
+     league_users = UserSerializer(many=True) 
 
      fields = ('league_name', 'league_users')

@@ -36,7 +36,7 @@ class CustomUser(AbstractUser):
     correct_in_4 = models.IntegerField(default='0')
     correct_in_5 = models.IntegerField(default='0')
     user_avg = models.FloatField( default='0')
-    user_leagues = models.ManyToManyField('leagues.League', related_name='UserLeagues', default=None)
+    user_leagues = models.ManyToManyField('leagues.League', related_name='league_users', default=None)
     daily_song_stats = models.ForeignKey(Score, related_name='user_daily_score_on_song', on_delete=models.CASCADE,  blank=True, null=True)
 
 CustomUser.objects.aggregate(Avg('correct_in_1'), Avg('correct_in_2'))

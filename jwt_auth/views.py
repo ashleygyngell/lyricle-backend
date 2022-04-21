@@ -1,12 +1,14 @@
-
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
 from django.conf import settings
+from leagues.models import League
 import jwt
-from .serializers import UserSerializer
+from .serializers import UserSerializer 
+from leagues.serializers.common import JoinLeagueSerializer
 User = get_user_model()
 
 class RegisterView(APIView):
@@ -47,3 +49,23 @@ class CredentialsView(APIView):
     def get(self, request):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
+
+
+class JoinLeague(APIView):
+  permission_classes = [IsAuthenticated,]
+  
+  def put(self, request, pk):
+   leagueToJoin = League.objects.get(pk=pk)
+
+   print('ALERT',leagueToJoin)
+   request.data['league_users'] = [(leagueToJoin.league_users.add(request.user.id))]
+
+   Join_LeagueSerializer = JoinLeagueSerializer(leagueToJoin, data=request.data)
+  
+   if Join_LeagueSerializer.is_valid():
+
+            Join_LeagueSerializer.save()
+
+            return Response(data=Join_LeagueSerializer.data, status=status.HTTP_201_CREATED)
+
+   return Response(data=Join_LeagueSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
