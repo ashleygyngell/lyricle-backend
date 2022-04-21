@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'jwt_auth',
     'leagues',
     'dailysongs',
+    'scores',
 ]
 
 MIDDLEWARE = [

@@ -15,7 +15,7 @@ class League(models.Model):
             serialize=False,
             verbose_name='ID'
             )
-    league_name = models.CharField(max_length=50)
+    league_name = models.CharField(max_length=50, unique=True)
     daily_songs = models.ManyToManyField(Song, related_name="LeaguesDailySong", default=None)
     league_users = models.ManyToManyField(User, related_name="UserLeagues", default=None )
 

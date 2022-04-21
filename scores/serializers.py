@@ -1,19 +1,14 @@
 from rest_framework import serializers
-from ..models import League
-
+from .models import Score
 # This class controls how a League is serialized to JSON. Is inherited from the default Model Serializer 
-class LeagueSerializer(serializers.ModelSerializer):
+class ScoreSerializer(serializers.ModelSerializer):
 
   class Meta:
  # The class type we want it to serialize
-    model = League
+    model = Score
     # Which fields to serialize 
     fields = ('__all__')
 
-class UserLeagueSerializer(serializers.ModelSerializer):
+class MultipleScoreSerializer(serializers.ModelSerializer):
 
-    class Meta: 
-
-     model = League 
-
-     fields = ('league_name', 'league_users')
+  scores = ScoreSerializer(many=True)

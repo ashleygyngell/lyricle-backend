@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from scores.models import Score
 # from leagues.models import League
 
 # Create your models here.
@@ -33,6 +34,8 @@ class CustomUser(AbstractUser):
     correct_in_5 = models.IntegerField(blank=True, null=True)
     user_avg = models.FloatField(blank=True, null=True)
     user_leagues = models.ManyToManyField('leagues.League', related_name='UserLeagues', default=None)
+    daily_song_stats = models.ForeignKey(Score, related_name='user_daily_score_on_song', on_delete=models.CASCADE, null=True)
+
 
 
 
