@@ -11,6 +11,7 @@ from .serializers import UserSerializer
 from leagues.serializers.common import JoinLeagueSerializer
 User = get_user_model()
 
+# To Register a User
 class RegisterView(APIView):
 
     def post(self, request):
@@ -21,10 +22,11 @@ class RegisterView(APIView):
 
         return Response(serializer.errors, status=422)
 
-
+# To Login 
 class LoginView(APIView):
 
     def get_user(self, email):
+
         try:
             return User.objects.get(email=email)
         except User.DoesNotExist:
@@ -42,6 +44,7 @@ class LoginView(APIView):
         token = jwt.encode({'sub': user.id}, settings.SECRET_KEY, algorithm='HS256')
         return Response({'token': token, 'message': f'Welcome back {user.username}!'})
 
+# To see Users information
 class CredentialsView(APIView):
 
     permission_classes = [IsAuthenticated,]
@@ -50,7 +53,7 @@ class CredentialsView(APIView):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
 
-
+# To Join a League
 class JoinLeague(APIView):
   permission_classes = [IsAuthenticated,]
   
@@ -69,3 +72,11 @@ class JoinLeague(APIView):
             return Response(data=Join_LeagueSerializer.data, status=status.HTTP_201_CREATED)
 
    return Response(data=Join_LeagueSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# To view all of a Users Score
+class ViewScores(APIView):
+  permission_classes = [IsAuthenticated,]
+
+  def get(self, request, pk):
+    getUsersScores = User.userAvg.get(pk=pk)
+    print("ALERT", getUsersScores)
