@@ -6,9 +6,11 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from leagues.models import League
+from scores.models import Score
 import jwt
 from .serializers import UserSerializer 
 from leagues.serializers.common import JoinLeagueSerializer
+from scores.serializers import AddDailyScoreSerializer
 User = get_user_model()
 
 # To Register a User
@@ -73,10 +75,26 @@ class JoinLeague(APIView):
 
    return Response(data=Join_LeagueSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# To view all of a Users Score
-class ViewScores(APIView):
+class AllocateDailyScore(APIView): 
   permission_classes = [IsAuthenticated,]
 
-  def get(self, request, pk):
-    getUsersScores = User.userAvg.get(pk=pk)
-    print("ALERT", getUsersScores)
+  def put(self, request, pk):
+    AddScore = Score.objects.get(pk=pk)
+    print('ALERT', AddScore, pk)
+
+    request.data['daily_correct_in_1'] = [request.user.id]
+
+    add_dailyscore = AddDailyScoreSerializer(AddScore, data=request.data)
+
+    if add_dailyscore.is_valid():
+
+            add_dailyscore.save()
+
+            return Response(data=add_dailyscore.data, status=status.HTTP_201_CREATED)
+
+    return Response(data=add_dailyscore.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+  
+  

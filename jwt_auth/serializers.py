@@ -30,12 +30,11 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'email', 'password', 'password_confirmation', 'image', 'user_leagues','correct_in_1', 'correct_in_2', 'correct_in_3', 'correct_in_4', 'correct_in_5', 'user_avg',  )
 
-        # __all__
-        # add in image in fields. 
 
 class JoinLeagueSerializer(serializers.ModelSerializer):
    
    class Meta:
         model = User
         fields = ('id', 'league_users')
+
 

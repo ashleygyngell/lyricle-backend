@@ -22,4 +22,5 @@ urlpatterns = [
     path('leagues/', include("leagues.urls")),
     path('dailysongs/', include("dailysongs.urls")),
     path('authentication/', include("jwt_auth.urls")),
+    path('scores/', include("scores.urls")),
 ]

@@ -22,7 +22,7 @@ class LeagueSerializer(serializers.ModelSerializer):
 
     league_users = UserSerializer(many=True) 
     # Which fields to serialize 
-    fields = ('league_name', 'league_users',)
+    fields = ('league_name', 'league_users', 'daily_songs' )
 
 class UserLeagueSerializer(serializers.ModelSerializer):
 
