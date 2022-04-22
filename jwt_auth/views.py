@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from leagues.models import League
 from scores.models import Score
+from dailysongs.models import Song
 import jwt
 from .serializers import UserSerializer 
 from leagues.serializers.common import JoinLeagueSerializer
@@ -75,24 +76,31 @@ class JoinLeague(APIView):
 
    return Response(data=Join_LeagueSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class AllocateDailyScore(APIView): 
+
+
+class AllocateDailyScoreIn1(APIView): 
   permission_classes = [IsAuthenticated,]
 
   def put(self, request, pk):
-    AddScore = Score.objects.get(pk=pk)
-    print('ALERT', AddScore, pk)
+    leagueId = request.GET.get("leagueId")
+    league = League.objects.get(pk=leagueId)
+    daily_song = Song.objects.get(pk=pk)
+    Score.objects.get_or_create(daily_correct_in_1 = request.user, daily_song = daily_song, league = league)
+    # addScoreIn1ToSong.daily_correct_in_1 = request.user
+    # addScoreIn1ToSong.get_or_create()
+    return Response(status=status.HTTP_201_CREATED)
+    # print('THISISTHESONG', addScoreIn1ToSong, 'THE USER', request.user.id, )
+    # request.data['daily_correct_in_1'] = request.user
 
-    request.data['daily_correct_in_1'] = [request.user.id]
+    # add_dailyscore = AddDailyScoreSerializer(addScoreIn1ToSong, data=request.data)
 
-    add_dailyscore = AddDailyScoreSerializer(AddScore, data=request.data)
+    # if add_dailyscore.is_valid():
 
-    if add_dailyscore.is_valid():
+    #         add_dailyscore.save()
 
-            add_dailyscore.save()
+    #         return Response(data=add_dailyscore.data, status=status.HTTP_201_CREATED)
 
-            return Response(data=add_dailyscore.data, status=status.HTTP_201_CREATED)
-
-    return Response(data=add_dailyscore.errors, status=status.HTTP_400_BAD_REQUEST)
+    # return Response(data=add_dailyscore.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 

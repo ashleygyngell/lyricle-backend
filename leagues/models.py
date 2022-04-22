@@ -17,7 +17,7 @@ class League(models.Model):
             )
     league_name = models.CharField(max_length=50, unique=True)
     daily_songs = models.ManyToManyField(Song, related_name="LeaguesDailySong", default=None)
-    # league_users = models.ManyToManyField(User, related_name="UserLLeagues", default=None)
+    # league_users = models.ManyToManyField(User, related_name="UserLeagues", default=None)
 
     def __str__(self):
         return self.league_name
