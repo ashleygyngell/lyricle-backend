@@ -83,8 +83,11 @@ class AllocateDailyScoreIn1(APIView):
 
   def put(self, request, pk):
     leagueId = request.GET.get("leagueId")
+    
+    
     league = League.objects.get(pk=leagueId)
     daily_song = Song.objects.get(pk=pk)
+   
     Score.objects.get_or_create(daily_correct_in_1 = request.user, daily_song = daily_song, league = league)
     # addScoreIn1ToSong.daily_correct_in_1 = request.user
     # addScoreIn1ToSong.get_or_create()
@@ -102,7 +105,65 @@ class AllocateDailyScoreIn1(APIView):
 
     # return Response(data=add_dailyscore.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class AllocateDailyScoreIn2(APIView): 
+  permission_classes = [IsAuthenticated,]
 
+  def put(self, request, pk):
+    leagueId = request.GET.get("leagueId")
+    
+    
+    league = League.objects.get(pk=leagueId)
+    daily_song = Song.objects.get(pk=pk)
+   
+    Score.objects.get_or_create(daily_correct_in_2 = request.user, daily_song = daily_song, league = league)
+    # addScoreIn1ToSong.daily_correct_in_1 = request.user
+    # addScoreIn1ToSong.get_or_create()
+    return Response(status=status.HTTP_201_CREATED)
+
+class AllocateDailyScoreIn3(APIView): 
+  permission_classes = [IsAuthenticated,]
+
+  def put(self, request, pk):
+    leagueId = request.GET.get("leagueId")
+    
+    
+    league = League.objects.get(pk=leagueId)
+    daily_song = Song.objects.get(pk=pk)
+   
+    Score.objects.get_or_create(daily_correct_in_3 = request.user, daily_song = daily_song, league = league)
+    # addScoreIn1ToSong.daily_correct_in_1 = request.user
+    # addScoreIn1ToSong.get_or_create()
+    return Response(status=status.HTTP_201_CREATED)
+
+class AllocateDailyScoreIn4(APIView): 
+  permission_classes = [IsAuthenticated,]
+
+  def put(self, request, pk):
+    leagueId = request.GET.get("leagueId")
+    
+    
+    league = League.objects.get(pk=leagueId)
+    daily_song = Song.objects.get(pk=pk)
+   
+    Score.objects.get_or_create(daily_correct_in_4 = request.user, daily_song = daily_song, league = league)
+    # addScoreIn1ToSong.daily_correct_in_1 = request.user
+    # addScoreIn1ToSong.get_or_create()
+    return Response(status=status.HTTP_201_CREATED)
+
+class AllocateDailyScoreIn5(APIView): 
+  permission_classes = [IsAuthenticated,]
+
+  def put(self, request, pk):
+    leagueId = request.GET.get("leagueId")
+    
+    
+    league = League.objects.get(pk=leagueId)
+    daily_song = Song.objects.get(pk=pk)
+   
+    Score.objects.get_or_create(daily_correct_in_5 = request.user, daily_song = daily_song, league = league)
+    # addScoreIn1ToSong.daily_correct_in_1 = request.user
+    # addScoreIn1ToSong.get_or_create()
+    return Response(status=status.HTTP_201_CREATED)
 
   
   
