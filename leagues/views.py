@@ -26,3 +26,15 @@ class UserLeague(APIView):
         serialized_leagues = UserLeagueSerializer(request.user.user_leagues, many=True)
 
         return Response(data = serialized_leagues.data, status=200)
+
+class CreateLeague(APIView):
+
+    def post(self, request):
+        serializer = LeagueSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'League Created!'})
+
+        return Response(serializer.errors, status=422)
+
+        league_name
