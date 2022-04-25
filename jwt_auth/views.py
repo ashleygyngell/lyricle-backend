@@ -62,19 +62,21 @@ class JoinLeague(APIView):
   
   def put(self, request, pk):
    leagueToJoin = League.objects.get(pk=pk)
-
+   leagueToJoin.league_users.add(request.user.id)
+   leagueToJoin.save()
    print('ALERT',leagueToJoin)
-   request.data['league_users'] = [(leagueToJoin.league_users.add(request.user.id))]
+   return Response(status=status.HTTP_201_CREATED)
+  #  request.data['league_users'] = [(leagueToJoin.league_users.add(request.user.id))]
 
-   Join_LeagueSerializer = JoinLeagueSerializer(leagueToJoin, data=request.data)
+  #  Join_LeagueSerializer = JoinLeagueSerializer(leagueToJoin, data=request.data)
   
-   if Join_LeagueSerializer.is_valid():
+  #  if Join_LeagueSerializer.is_valid():
 
-            Join_LeagueSerializer.save()
+  #           Join_LeagueSerializer.save()
 
-            return Response(data=Join_LeagueSerializer.data, status=status.HTTP_201_CREATED)
+  #           return Response(data=Join_LeagueSerializer.data, status=status.HTTP_201_CREATED)
 
-   return Response(data=Join_LeagueSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
+  #  return Response(data=Join_LeagueSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
