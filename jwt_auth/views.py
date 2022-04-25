@@ -83,7 +83,7 @@ class JoinLeague(APIView):
 class AllocateDailyScoreIn1(APIView): 
   permission_classes = [IsAuthenticated,]
 
-  def put(self, request, pk):
+  def get(self, request, pk):
     leagueId = request.GET.get("leagueId")
     
     
