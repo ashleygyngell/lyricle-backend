@@ -40,7 +40,7 @@ class CustomUser(AbstractUser):
     daily_song_stats = models.ForeignKey(Score, related_name='user_daily_score_on_song', on_delete=models.CASCADE,  blank=True, null=True)
 
 
-CustomUser.objects.aggregate(Avg('correct_in_1'), Avg('correct_in_2'))
+# CustomUser.objects.aggregate(Avg('correct_in_1'), Avg('correct_in_2'))
 
 
 
