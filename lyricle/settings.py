@@ -160,7 +160,7 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'jwt_auth.CustomUser'
 
 
-CSRF_TRUSTED_ORIGINS = ['https://git.heroku.com/eflyricle.git']
+CSRF_TRUSTED_ORIGINS = ['https://lyriclegame.netlify.app/']
 
 
 django_on_heroku.settings(locals())
