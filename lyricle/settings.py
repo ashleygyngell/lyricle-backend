@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'leagues',
     'dailysongs',
     'scores',
+    'getlyrics',
 ]
 
 MIDDLEWARE = [

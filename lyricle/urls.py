@@ -23,4 +23,5 @@ urlpatterns = [
     path('dailysongs/', include("dailysongs.urls")),
     path('authentication/', include("jwt_auth.urls")),
     path('scores/', include("scores.urls")),
+    path('getlyrics/', include("getlyrics.urls")),
 ]
