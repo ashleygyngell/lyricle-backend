@@ -52,9 +52,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'jwt_auth',
-    'getlyrics',
     'leagues',
     'dailysongs',
+    'getlyrics',
     'scores',
 ]
 
