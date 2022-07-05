@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'jwt_auth',
     'leagues',
-    'getlyrics',
     'dailysongs',
     'scores',
 ]
