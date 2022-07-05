@@ -39,7 +39,6 @@ class LoginView(APIView):
 
         email = request.data.get('email')
         password = request.data.get('password')
-        print(email)
 
         user = self.get_user(email)
         if not user.check_password(password):
