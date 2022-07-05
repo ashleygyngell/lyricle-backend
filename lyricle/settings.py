@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'getlyrivcs',
+    'getlyrics',
     'jwt_auth',
     'leagues',
     'dailysongs',
