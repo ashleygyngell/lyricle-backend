@@ -12,6 +12,7 @@ python-dotenv = "*"
 dj-database-url = "*"
 django-cors-headers = "*"
 lyricsgenius = "*"
+gunicorn = "*"
 
 [dev-packages]
 
