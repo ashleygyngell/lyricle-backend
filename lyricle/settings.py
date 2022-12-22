@@ -164,6 +164,7 @@ AUTH_USER_MODEL = 'jwt_auth.CustomUser'
 
 
 # CSRF_TRUSTED_ORIGINS = ['https://lyriclegamedb.herokuapp.com']
+# CSRF_TRUSTED_ORIGINS = ['*']
 CSRF_TRUSTED_ORIGINS = ['*']
 
 
