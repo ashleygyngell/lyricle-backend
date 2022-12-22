@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
-import django_on_heroku
+# import django_on_heroku
 from dotenv import load_dotenv
 import dj_database_url
 load_dotenv()
@@ -142,6 +142,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -161,7 +163,8 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'jwt_auth.CustomUser'
 
 
-CSRF_TRUSTED_ORIGINS = ['https://lyriclegamedb.herokuapp.com']
+# CSRF_TRUSTED_ORIGINS = ['https://lyriclegamedb.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['*']
 
 
-django_on_heroku.settings(locals())
+# django_on_heroku.settings(locals())
