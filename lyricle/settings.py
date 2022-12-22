@@ -167,4 +167,3 @@ AUTH_USER_MODEL = 'jwt_auth.CustomUser'
 CSRF_TRUSTED_ORIGINS = ['*']
 
 
-# django_on_heroku.settings(locals())
