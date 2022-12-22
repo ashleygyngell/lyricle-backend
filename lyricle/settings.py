@@ -166,4 +166,4 @@ AUTH_USER_MODEL = 'jwt_auth.CustomUser'
 CSRF_TRUSTED_ORIGINS = ['https://lyriclegamedb.herokuapp.com']
 
 
-django_on_heroku.settings(locals())
+# django_on_heroku.settings(locals())
