@@ -60,7 +60,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'lyricle.apps.RenderConfig',
+   
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
