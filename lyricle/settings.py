@@ -42,16 +42,16 @@ load_dotenv(BASE_DIR / '.env')
 # ALLOWED_HOSTS = ['*']
 # core/settings.py
 
-if ENV == 'DEV':
-  SECRET_KEY = 'django-insecure-8zeca4r0gftp@z%r%9ium+wxc@skq71ua1covj4ci+gva(yz5d'
-else:
-      SECRET_KEY = str(os.getenv('SECRET_KEY'))
+# if ENV == 'DEV':
+#   SECRET_KEY = 'django-insecure-8zeca4r0gftp@z%r%9ium+wxc@skq71ua1covj4ci+gva(yz5d'
+# else:
+#       SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
-# # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.getenv('SECRET_KEY')
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-# # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
 
 ALLOWED_HOSTS = ['*']
 
@@ -78,6 +78,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
