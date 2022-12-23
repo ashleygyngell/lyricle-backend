@@ -1,2 +1,2 @@
 
-web: gunicorn 'lyricle.wsgi'
+web: gunicorn 'lyricle.wsgi:application'
