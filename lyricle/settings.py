@@ -29,21 +29,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-if ENV == 'DEV':
-  SECRET_KEY = 'django-insecure-8zeca4r0gftp@z%r%9ium+wxc@skq71ua1covj4ci+gva(yz5d'
-else:
-      SECRET_KEY = str(os.getenv('SECRET_KEY'))
+SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
+# if ENV == 'DEV':
+#   SECRET_KEY = 'django-insecure-8zeca4r0gftp@z%r%9ium+wxc@skq71ua1covj4ci+gva(yz5d'
+# else:
+#       SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = ENV == 'DEV'
+# DEBUG = ENV == 'DEV'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = 'RENDER' not in os.environ
 
 ALLOWED_HOSTS = ['*']
+
+
 
 
 # Application definition
 
 INSTALLED_APPS = [
-  
+    'render.apps.RenderConfig', 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -98,15 +104,15 @@ WSGI_APPLICATION = 'lyricle.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = { 'default': dj_database_url.config(         default='postgresql://postgres:postgres@localhost:5432/mysite',        conn_max_age=600    )}
-if ENV != 'DEV':
-     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)	
-else:
-     DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'lyricledb3',
-        'HOST': 'localhost',
-        'PORT': 5432
-    }
+# if ENV != 'DEV':
+#      DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)	
+# else:
+#      DATABASES['default'] = {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'lyricledb3',
+#         'HOST': 'localhost',
+#         'PORT': 5432
+#     }
 
 
 # Password validation
