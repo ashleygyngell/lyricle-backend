@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 import dj_database_url
 load_dotenv()
@@ -106,9 +107,18 @@ WSGI_APPLICATION = 'lyricle.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
-}
+AUTH_USER_MODEL = 'jwt_auth.CustomUser'
+
+DATABASES = {}
+if ENV != 'DEV':
+     DATABASES['default'] = dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600)	
+else:
+     DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'lyricledb3',
+        'HOST': 'localhost',
+        'PORT': 5432
+    }
 
 
 # Password validation
@@ -162,10 +172,8 @@ REST_FRAMEWORK = {
     ],
 }
 
-AUTH_USER_MODEL = 'jwt_auth.CustomUser'
+
 
 
 CSRF_TRUSTED_ORIGINS = ['https://lyriclegamedb.herokuapp.com']
 
-
-# django_on_heroku.settings(locals())
