@@ -43,6 +43,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+  
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -61,6 +62,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -95,7 +97,7 @@ WSGI_APPLICATION = 'lyricle.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {}
+DATABASES = { 'default': dj_database_url.config(         default='postgresql://postgres:postgres@localhost:5432/mysite',        conn_max_age=600    )}
 if ENV != 'DEV':
      DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)	
 else:
@@ -141,9 +143,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+# Following settings only make sense on production and may break development environments.
+if not DEBUG:    # Tell Django to copy statics to the `staticfiles` directory
+    # in your application directory on Render.
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # Turn on WhiteNoise storage backend that takes care of compressing static files
+    # and creating unique names for each version so they can safely be cached forever.
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -165,6 +172,6 @@ AUTH_USER_MODEL = 'jwt_auth.CustomUser'
 
 # CSRF_TRUSTED_ORIGINS = ['https://lyriclegamedb.herokuapp.com']
 # CSRF_TRUSTED_ORIGINS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://lyricle-backend.vercel.app/']
+CSRF_TRUSTED_ORIGINS = ['https://lyricle-backend-production.up.railway.app/']
 
 
