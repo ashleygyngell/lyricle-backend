@@ -107,13 +107,18 @@ WSGI_APPLICATION = 'lyricle.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-AUTH_USER_MODEL = 'jwt_auth.CustomUser'
+
 
 DATABASES = {}
 if ENV != 'DEV':
      DATABASES['default'] = dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600)	
 else:
-      DATABASES['default'] = dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600)	
+     DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'lyricledb3',
+        'HOST': 'localhost',
+        'PORT': 5432
+    }
 
 
 # Password validation
@@ -167,8 +172,8 @@ REST_FRAMEWORK = {
     ],
 }
 
+AUTH_USER_MODEL = 'jwt_auth.CustomUser'
 
 
-
-CSRF_TRUSTED_ORIGINS = ['https://lyriclegamedb.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['https://lyricle-backend.onrender.com']
 
