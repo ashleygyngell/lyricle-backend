@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
-import django_on_heroku
+# import django_on_heroku
 from dotenv import load_dotenv
 import dj_database_url
 load_dotenv()
@@ -29,20 +29,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-if ENV == 'DEV':
-  SECRET_KEY = 'django-insecure-8zeca4r0gftp@z%r%9ium+wxc@skq71ua1covj4ci+gva(yz5d'
-else:
-      SECRET_KEY = str(os.getenv('SECRET_KEY'))
+SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
+# if ENV == 'DEV':
+#   SECRET_KEY = 'django-insecure-8zeca4r0gftp@z%r%9ium+wxc@skq71ua1covj4ci+gva(yz5d'
+# else:
+#       SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = ENV == 'DEV'
+# DEBUG = ENV == 'DEV'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = 'RENDER' not in os.environ
 
 ALLOWED_HOSTS = ['*']
+
+
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'render.apps.RenderConfig', 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -61,6 +68,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -95,16 +103,16 @@ WSGI_APPLICATION = 'lyricle.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {}
-if ENV != 'DEV':
-     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)	
-else:
-     DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'lyricledb3',
-        'HOST': 'localhost',
-        'PORT': 5432
-    }
+DATABASES = { 'default': dj_database_url.config(         default='postgresql://postgres:postgres@localhost:5432/mysite',        conn_max_age=600    )}
+# if ENV != 'DEV':
+#      DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)	
+# else:
+#      DATABASES['default'] = {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'lyricledb3',
+#         'HOST': 'localhost',
+#         'PORT': 5432
+#     }
 
 
 # Password validation
@@ -141,7 +149,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+# Following settings only make sense on production and may break development environments.
+if not DEBUG:    # Tell Django to copy statics to the `staticfiles` directory
+    # in your application directory on Render.
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # Turn on WhiteNoise storage backend that takes care of compressing static files
+    # and creating unique names for each version so they can safely be cached forever.
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -161,7 +176,8 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'jwt_auth.CustomUser'
 
 
-CSRF_TRUSTED_ORIGINS = ['https://lyriclegamedb.herokuapp.com']
+# CSRF_TRUSTED_ORIGINS = ['https://lyriclegamedb.herokuapp.com']
+# CSRF_TRUSTED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://lyricle-backend-production.up.railway.app/']
 
 
-django_on_heroku.settings(locals())

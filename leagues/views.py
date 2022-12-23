@@ -36,5 +36,3 @@ class CreateLeague(APIView):
             return Response({'message': 'League Created!'})
 
         return Response(serializer.errors, status=422)
-
-        league_name
