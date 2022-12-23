@@ -78,7 +78,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -115,16 +114,17 @@ WSGI_APPLICATION = 'lyricle.wsgi.application'
 
 
 
-DATABASES = {}
-if ENV != 'DEV':
-     DATABASES['default'] = dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600)	
-else:
-     DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'lyricledb3',
-        'HOST': 'localhost',
-        'PORT': 5432
-    }
+DATABASES = {
+    'default': dj_database_url.config(      default='postgresql://postgres:postgres@localhost:5432/mysite',        conn_max_age=600    )}
+# if ENV != 'DEV':
+#      DATABASES['default'] = dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600)	
+# else:
+#      DATABASES['default'] = {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'lyricledb3',
+#         'HOST': 'localhost',
+#         'PORT': 5432
+#     }
 
 
 # Password validation
