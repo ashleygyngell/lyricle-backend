@@ -2,13 +2,15 @@ databases:
   - name: mysite
     databaseName: mysite
     user: mysite
+    
 
 services:
   - type: web
     name: mysite
     env: python
+    plan: free
     buildCommand: "./build.sh"
-    startCommand: "gunicorn lyricle.wsgi:application"
+    startCommand: "gunicorn mysite.wsgi:application"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
