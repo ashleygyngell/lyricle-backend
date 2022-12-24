@@ -1,2 +1,2 @@
 
-web: gunicorn 'lyricle.wsgi:application'
+web: gunicorn lyricle.wsgi:application --log-file -
