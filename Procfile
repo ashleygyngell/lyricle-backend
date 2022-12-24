@@ -1,2 +1,3 @@
 
-web: gunicorn 'lyricle.wsgi'
+web: gunicorn -c config.py lyricle:app
+
