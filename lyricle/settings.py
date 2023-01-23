@@ -37,23 +37,20 @@ load_dotenv(BASE_DIR / '.env')
 #       SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = ENV == 'DEV'
 
 # ALLOWED_HOSTS = ['*']
 # core/settings.py
 
-if ENV == 'DEV':
-  SECRET_KEY = 'django-insecure-8zeca4r0gftp@z%r%9ium+wxc@skq71ua1covj4ci+gva(yz5d'
-else:
-      SECRET_KEY = str(os.getenv('SECRET_KEY'))
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
+DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'lyricle-post-heroku.fly.dev']
+CRSF_TRUSTED_ORIGINS = ['https://lyricle-post-heroku.fly.dev']
 
 
 
@@ -65,6 +62,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic', # whitenoise
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
@@ -78,6 +76,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # whitenoise
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -115,7 +114,7 @@ WSGI_APPLICATION = 'lyricle.wsgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.config( default='postgresql://postgres:postgres@localhost:5432/mysite',        conn_max_age=600    )}
+    'default': dj_database_url.config( default='sqlite:///' + os.path.join('db.sqlite3'),        conn_max_age=600    )}
 # if ENV != 'DEV':
 #      DATABASES['default'] = dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600)	
 # else:
@@ -161,8 +160,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' # whitenoise
+
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS=[os.path.join(BASE_DIR, 'lyricle/static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -182,5 +184,5 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'jwt_auth.CustomUser'
 
 
-CSRF_TRUSTED_ORIGINS = ['https://lyricle-backend.onrender.com']
+# CSRF_TRUSTED_ORIGINS = ['https://lyricle-backend.onrender.com']
 
